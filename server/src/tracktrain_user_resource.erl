@@ -32,9 +32,6 @@ to_json(_ReqData, []) ->
 
 to_json(ReqData, Users) ->
 	{ ?list_records_to_json(user, Users), ReqData, Users}.
-	%% Nedan funkar
-	%StrUsers = [ [?record_to_json(user, User)] || User <- Users],
-	%{"[" ++ string:join(StrUsers, ",\n") ++ "]", ReqData, Users}.
 
   
 
