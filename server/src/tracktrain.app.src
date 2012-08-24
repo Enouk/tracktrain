@@ -1,0 +1,15 @@
+{application, tracktrain,
+ [
+  {description, "Track Train Server"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  crypto,
+                  mochiweb,
+                  webmachine
+                 ]},
+  {mod, { tracktrain_app, []}},
+  {env, []}
+ ]}.
