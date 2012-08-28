@@ -10,10 +10,11 @@
 %% ===================================================================
 
 start([]) ->
+	tracktrain_db:init(),
 	tracktrain_sup:start_link().
 
 start(_StartType, _StartArgs) ->
-    tracktrain_sup:start_link().
+	start([]).
 
 stop(_State) ->
     ok.

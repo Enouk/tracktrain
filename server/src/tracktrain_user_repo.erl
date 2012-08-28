@@ -16,15 +16,19 @@
 %%
 %% API Functions
 %%
-get_all() ->
-	{ok, [#user{id=1, name=list_to_binary("Apa")}, 
-		  #user{id=2, name=list_to_binary("Banan")}]}.
-  
+
 get(UserId) ->
-	case UserId of
-		"kalle" -> {ok, #user{id=10, name=list_to_binary("Kalle")}};
-		_ -> not_found
+	case tracktrain_db:read(user, UserId) of 
+		{atomic, [User]} -> {ok, User};
+		{atomic, []} -> not_found
 	end.
+
+
+get_all() ->
+	{atomic, Users} = tracktrain_db:read_all(user),
+	{ok, Users}.
+
+
 
 
 %%

@@ -1,7 +1,7 @@
 %% Author: marcus
-%% Created: 11 aug 2012
-%% Description: TODO: Add description to tracktrain_root_resource
--module(tracktrain_user_resource).
+%% Created: 26 aug 2012
+%% Description: TODO: Add description to tracktrain_food_item_resource
+-module(tracktrain_food_item_resource).
 
 -include("tracktrain.hrl").
 -include("jsonerl.hrl").
@@ -13,7 +13,6 @@
 init([]) -> {ok, []}.
 
 content_types_provided(ReqData, Context) ->
-	erlang:display("user resource"),
 	 {[{"application/json", to_json}], ReqData, Context}.
     
 resource_exists(ReqData, Context) ->
@@ -22,23 +21,15 @@ resource_exists(ReqData, Context) ->
 			{ok, All} = tracktrain_user_repo:get_all(),
 			{true, ReqData, All};
 		UserId -> 
-			case tracktrain_user_repo:get(list_to_integer(UserId)) of 
-				{ok, User} -> {true, ReqData, User};
+			case tracktrain_user_repo:get(UserId) of 
+				{ok, User} -> {true, ReqData, [User]};
 				not_found -> {false, ReqData, Context}
 			end
 	end.
 to_json(_ReqData, []) ->
 	{"", _ReqData, []};
 
-to_json(ReqData, Users) when is_list(Users)->
-	{ ?list_records_to_json(user, Users), ReqData, Users};
-
-to_json(ReqData, User) ->
-	{ ?record_to_json(user, User), ReqData, User}.
-
-
-
-  
-
+to_json(ReqData, Users) ->
+	{ ?list_records_to_json(user, Users), ReqData, Users}.
 
 
